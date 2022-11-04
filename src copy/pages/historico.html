@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historico</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-top">
+            <div class="nome-logo"><h1><a href="index.html">UFSI</a></h1> </div>
+
+            <div class="nome-completo">
+
+                <h1> Universidade Federal de Sistemas de Informação  </h1>
+                <h3>Brasil</h3>
+
+
+            </div>
+        </div>
+        <!-- Linhas -->
+        <div class="nav-bottom">
+            <div class="linha-verde"></div>
+            <div class="linha-azul"></div>
+            <div class="linha-laranja">Alunos | Ajuda | Sair      </div>
+        </div>
+       
+    </nav>
+    <section class="main">
+        <div class="main-left">
+            <div class="box-acessos">
+                <div class="titulo-box">
+                   
+                        Acessos
+                  
+                </div>
+                <div class="itens">
+                
+                <h5 class="item"><a href="historico.html">Historico</a>     </h5>
+                <h5 class="item"><a href="#">Grade Horaria</a>       </h5>
+                <h5 class="item"><a href="#">Periodos</a>       </h5>
+            </div>
+            </div>
+        </div>
+
+        <div class="main-right">
+            
+         
+                <div class="formulario">
+                    <form id="form" action="">
+                        <label for="">buscar</label>
+                        <div>
+
+                
+                        <input id="input" autocomplete="off" />
+                        <button class="send">Pesquisar</button>
+                    </div>
+                      </form>
+                </div>
+
+                <div class="historico">
+
+                    <ul class="disciplina" id="messages">
+                        <li  class="primList">
+                           Disciplina
+                        </li>
+                        <li>
+                            Introdução a programação
+                        </li>
+
+                    </ul>
+                    <ul class="concluido">
+                        <li class="primList">
+                            Status
+                        </li>
+                        <li>
+                            Concluido
+                        </li>
+                       
+                    </ul>
+
+                </div>
+
+
+            </div>
+           
+     
+       
+      
+
+    </section>
+
+
+</body>
+</html>
+
+<script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+
+      var messages = document.getElementById('messages');
+      var form = document.getElementById('form');
+      var input = document.getElementById('input');
+
+      form.addEventListener('submit', function(e) {
+        
+        e.preventDefault();
+        if (input.value) {
+          socket.emit('historico', input.value);
+          input.value = '';
+        }
+      });
+
+      socket.on('historico', function(msg) {
+        
+        console.log(msg)
+        var item = document.createElement('li');
+
+        item.textContent = msg[0];
+       
+  
+        messages.appendChild(item);
+        
+      });
+
+
+    </script>
+
+<style>
+    .disciplina, .concluido{
+        width: 50%;
+      
+        list-style: none;
+    }
+    .primList{
+        color: #1094AB;
+        font-weight: bold;
+        border-bottom: 1px solid black;
+        margin-bottom: 10px;
+    }
+    .historico{
+        height: 60%;
+        border: 1px solid #CCCCCC;
+        width: 90%;
+        display: flex;
+    }
+    .formulario label{
+        color: #F7B242;
+        font-weight: bold;
+        padding: 6px 15px;
+    }
+    .formulario input{
+        border: 1px solid black;
+        padding: 2px;
+    }
+    .send{
+        border: 1px solid #CCCCCC;
+        background-color: #fff ;
+        padding: 6px 15px;
+        color: #1C94C4;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .formulario{
+        height: 30%;
+        width: 90%;
+        border-top: #F7B242 40px solid;
+   
+        border-radius: 10px;
+        padding-top: 8px;
+    }
+    .main-right{
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid #CCCCCC;
+    }
+</style>
+
+
+<style>
+    body,html{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 130vh;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+nav{
+height: 13%;
+width: 99.6%;
+
+margin: 0;
+padding: 0;
+}
+
+
+
+.nav-top{
+  height: 70%;
+  width: 100%;
+
+  display: flex;
+}
+.nav-bottom{
+height: 30%;
+width: 100%;
+
+}
+
+.nome-logo{
+
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nome-logo h1{
+  font-size: 50px;
+}
+.nome-logo a{
+    text-decoration: none;
+    color: #000;
+}
+.nome-completo{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 20px;
+
+}
+.nome-completo h1{
+  color: #1094AB;
+  
+  font-weight: bold;
+  margin: 0;
+ 
+}
+
+.nome-completo h3{
+  color: #1094AB;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  margin: 0;
+ 
+}
+
+
+
+.linha-verde{
+  width: 100%;
+  height: 25%;
+  background-color: #FCB421;
+}
+.linha-azul{
+  width: 100%;
+  height: 25%;
+  background-color: #64C4D0;
+}
+.linha-laranja{
+  width: 100%;
+  height: 50%;
+  background-color: #1094AB;
+  font-size:  12px;
+  color: #fff;
+  display: flex;
+  justify-content: flex-end;
+ 
+}
+
+
+.main{
+    width: 99%;
+    height: 70%;
+
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    margin-top: 20px;
+    padding-left: 7px;
+    }
+
+    .main-left{
+        height: 70%;
+        width: 15%;
+       
+    }
+    .box-acessos{
+        border: 2px solid #CCCCCC;
+    }
+    .titulo-box{
+        color: #fff;
+        background-color: #CCCCCC;
+        font-weight: 800;
+        font-size: 12px;
+        margin: 2px;
+        padding-left: 5px;
+    }
+    .itens{
+       
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding-left: 2px;
+
+    }
+    .item{
+        font-size: 12px;
+        width: 100%;
+        height: 25px;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        /* padding: 4px; */
+    }
+    .item:hover{
+        background-color: #CCCCCC;
+    }
+    .item a{
+        text-decoration: none;
+        color: #000;
+        width: 100%;
+
+    }
+
+    .main-right{
+        width: 90%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+    
+    }
+    .avisos{
+        width: 100%;
+        height: 5%;
+        
+    }
+    .avisos h6{
+        border-bottom: 2px solid black;
+        width: 100%;
+    }
+</style>
