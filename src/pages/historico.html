@@ -9,7 +9,7 @@
 <body>
     <nav>
         <div class="nav-top">
-            <div class="nome-logo"><h1><a href="index.html">UFSI</a></h1> </div>
+            <div class="nome-logo"><h1><a href="http://localhost:3000/api/">UFSI</a></h1> </div>
 
             <div class="nome-completo">
 
@@ -23,7 +23,7 @@
         <div class="nav-bottom">
             <div class="linha-verde"></div>
             <div class="linha-azul"></div>
-            <div class="linha-laranja">Alunos | Ajuda | Sair      </div>
+            <div class="linha-laranja"> Sair      </div>
         </div>
        
     </nav>
@@ -36,14 +36,15 @@
                   
                 </div>
                 <div class="itens">
-                
-                <h5 class="item"><a href="historico.html">Historico</a>     </h5>
-                <h5 class="item"><a href="#">Grade Horaria</a>       </h5>
-                <h5 class="item"><a href="#">Periodos</a>       </h5>
+                    <h5 class="item"><a href="/api/">Home</a>       </h5>
+                    <h5 class="item"><a href="/api/historico">Historico</a>     </h5>
+                    <h5 class="item"><a href="/api/Grade">Grade Horaria</a>       </h5>
+                 
             </div>
             </div>
         </div>
 
+        
         <div class="main-right">
             
          
@@ -58,25 +59,21 @@
                     </div>
                       </form>
                 </div>
-
+                <h4 class="nomeAluno" id="nomeAluno">Nenhum aluno encontrado</h4>
                 <div class="historico">
 
-                    <ul class="disciplina" id="messages">
+                    <ul class="disciplina" id="disciplina">
                         <li  class="primList">
                            Disciplina
                         </li>
-                        <li>
-                            Introdução a programação
-                        </li>
+                    
 
                     </ul>
-                    <ul class="concluido">
+                    <ul class="concluido" id="stts">
                         <li class="primList">
                             Status
                         </li>
-                        <li>
-                            Concluido
-                        </li>
+                    
                        
                     </ul>
 
@@ -99,7 +96,8 @@
     <script>
       var socket = io();
 
-      var messages = document.getElementById('messages');
+      var disciplina = document.getElementById('disciplina');
+      var stts = document.getElementById('stts');
       var form = document.getElementById('form');
       var input = document.getElementById('input');
 
@@ -114,13 +112,35 @@
 
       socket.on('historico', function(msg) {
         
-        console.log(msg)
-        var item = document.createElement('li');
+        if(msg == 'nulo'){
+            nomeAluno.textContent = 'Aluno não encontrado'
+            nomeAluno.style.display = 'block'
+            location.reload()   
+        } 
+        else{
+        nomeAluno.style.display = 'block' 
+        nomeAluno.textContent ='Aluno: '+  msg[1];
 
-        item.textContent = msg[0];
+        for(var i = 2; i < msg.length; i++){
+            var item = document.createElement('li');
+            var value;
+
+            if(typeof(msg[i]) == 'boolean')
+            if( msg[i] == true) value = 'Concluido'
+            else value = 'Trancado'
+            else value = msg[i];
+            
+            item.textContent = value;
+            if(i%2 == 0)
+            disciplina.appendChild(item);
+            else
+            stts.appendChild(item);
+
+        }
+    }
+   
+        
        
-  
-        messages.appendChild(item);
         
       });
 
@@ -348,5 +368,8 @@ width: 100%;
     .avisos h6{
         border-bottom: 2px solid black;
         width: 100%;
+    }
+    .nomeAluno{
+        display: none;
     }
 </style>

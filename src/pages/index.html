@@ -12,7 +12,7 @@
   
     <nav>
         <div class="nav-top">
-            <div class="nome-logo"><h1><a>UFSI</a></h1> </div>
+            <div class="nome-logo"><h1><a href="http://localhost:3000/api/">UFSI</a></h1> </div>
 
             <div class="nome-completo">
 
@@ -40,10 +40,10 @@
                   
                 </div>
                 <div class="itens">
-                
-                <h5 class="item"><a href="historico">Historico</a>     </h5>
-                <h5 class="item"><a href="#">Grade Horaria</a>       </h5>
-                <h5 class="item"><a href="#">Periodos</a>       </h5>
+                <h5 class="item"><a href="/api/">Home</a>       </h5>
+                <h5 class="item"><a href="/api/historico">Historico</a>     </h5>
+                <h5 class="item"><a href="/api/Grade">Grade Horaria</a>       </h5>
+             
             </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
 
                   <div class="datasl">
                     <ul id="datasl">
-                      <li>03/11/2022</li>
+              
                       
                      </ul>
                   </div>
@@ -94,7 +94,7 @@
 
                   <div class="messages">
                     <ul id="messages">
-                      <li>teste importação</li>
+          
                      </ul>
                   </div>
                   </div>
@@ -143,13 +143,16 @@
         var dataLi = document.createElement('li');
         dataLi.innerHTML ='03/11/2022' ;
         dataList.appendChild(dataLi);
+    
 
         item.textContent = msg;
   
         messages.appendChild(item);
-        window.scrollTo(0, document.body.scrollHeight);
+
       });
 
+  
+      
 
     </script>
      <style>

@@ -1,22 +1,28 @@
 const app = require('./src/app');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const port = process.env.PORT || 3000;
 
-const port = 3000;
+
 io.on('connection', (socket) => {
+  socket.on('public news', msg => {
 
-    //Recebe e publica os comunicados gerais
-      socket.on('public news', msg => {
-        io.emit('public news', msg);
-      });
-      //Pesquisa histórico de disciplinas concluídas por um aluno 
-      socket.on('historico', msg => {
-        var objeto = [msg,'concluido'] 
-        io.emit('historico', objeto);
-      });
-    
-    });
+    io.emit('public news', msg);
+  });
 
-app.listen(port, () => {
-  console.log(`SERVER.JS Uranos web Executando em http://localhost:${port}/`);
+  socket.on('historico', msg => {
+    const controler = require('./src/controllers/findController');
+   var valor = controler.historicoReturno(msg);
+    io.emit('historico', valor);
+  });
+  socket.on('grade', msg => {
+    const controler = require('./src/controllers/findController');
+   var valor = controler.gradeReturno(msg);
+    io.emit('grade', valor);
+  });
+});
+
+http.listen(port, () => {
+  console.log(`Servidor Socket executando em http://localhost:${port}/api`);
+
 });

@@ -1,7 +1,7 @@
 {
-  "name": "socket-chat-example",
+  "name": "EP - Redes",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "Execicio de programação - Redes 1",
   "main": "server.js",
   "dependencies": {
     "cors": "^2.8.5",
